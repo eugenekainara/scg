@@ -1,0 +1,22 @@
+server:
+  port: 8881
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${eureka.host}
+    register-with-eureka: false
+  host: http://localhost:8882/config/eureka/
+
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: sample
+        uri: lb://sample
+        predicates:
+        - Path=/sample/**
