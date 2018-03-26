@@ -1,20 +1,14 @@
 package com.example;
 
+import org.junit.Test;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.Collections;
-
-import static org.junit.Assert.*;
 
 public class TestControllerTest {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-
-    @org.junit.Test
+    @Test
     public void getTest() {
         for (int i = 0; i < 100; i++) {
             try {
