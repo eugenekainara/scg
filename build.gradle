@@ -7,12 +7,13 @@
 
 buildscript {
     ext {
-        springBootVersion = '2.0.2.RELEASE'
-        springCloudVersion = 'Finchley.RELEASE'
+        springBootVersion = '2.1.0.RELEASE'
+        springCloudVersion = 'Greenwich.M1'
     }
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://repo.spring.io/release" }
+        maven { url "https://repo.spring.io/milestone" }
         maven { url "http://repo.spring.io/plugins-release" }
     }
     dependencies {
@@ -49,4 +50,3 @@ subprojects {
     }
 
 }
-
