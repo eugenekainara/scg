@@ -7,7 +7,7 @@
 
 buildscript {
     ext {
-        springBootVersion = '2.1.0.RELEASE'
+        springBootVersion = '2.1.0.M3'
         springCloudVersion = 'Greenwich.M1'
     }
     repositories {
@@ -25,6 +25,7 @@ version = '0.0.1-SNAPSHOT'
 
 subprojects {
     repositories {
+        mavenLocal()
         mavenCentral()
         maven { url "https://repo.spring.io/release" }
         maven { url "https://repo.spring.io/milestone" }
@@ -37,6 +38,13 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events 'FAILED', 'SKIPPED'
+        }
+    }
+
     dependencyManagement {
         imports {
             mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
@@ -45,8 +53,11 @@ subprojects {
     }
 
     dependencies {
-        testCompile "junit:junit:4.11"
         compile "org.springframework.boot:spring-boot-autoconfigure"
+        compileOnly "org.projectlombok:lombok:${lombok_version}"
+        testCompile "org.springframework.boot:spring-boot-starter-test"
+        testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_version}"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_version}"
     }
 
 }

@@ -6,17 +6,34 @@ server:
     enabled: true
 
 eureka:
+  host: http://localhost:8882/config/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    status-page-url-path: ${server.servlet.context-path}actuator/info
+    health-check-url-path: ${server.servlet.context-path}actuator/health
+    home-page-url-path: ${server.servlet.context-path}
   client:
     service-url:
       defaultZone: ${eureka.host}
     register-with-eureka: false
-  host: http://localhost:8882/config/eureka/
-
+    registryFetchIntervalSeconds: 5
 spring:
   cloud:
     gateway:
       routes:
       - id: sample
         uri: lb://sample
+        order: 10000
         predicates:
         - Path=/sample/**
+      - id: sample_ws
+        uri: lb:ws://sample
+        order: 1000
+        predicates:
+        - Path=/sample/handler
+#org.springframework.web.server.adapter.HttpWebHandlerAdapter [306ffc25] 500 Server Error for HTTP GET "url here"
+logging:
+  level.org.springframework.cloud.gateway: TRACE
+  level.org.springframework.web: WARN
+  level.org.springframework.web.server.adapte.HttpWebHandlerAdapterr: TRACE
+  level.reactor.netty: TRACE

@@ -13,4 +13,19 @@ eureka:
     register-with-eureka: true
   host: http://localhost:8882/config/eureka/
   instance:
+    leaseRenewalIntervalInSeconds: 10
     hostname: localhost
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  info:
+    git:
+      mode: full
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level.com.example.WsSampleHandler: DEBUG
+  level.org.springframework.web.server.adapte.HttpWebHandlerAdapterr: TRACE
