@@ -4,6 +4,7 @@ server:
     context-path: /
   compression:
     enabled: true
+  use-forward-headers: true
 
 eureka:
   instance:

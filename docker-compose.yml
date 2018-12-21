@@ -3,18 +3,23 @@ version: '2'
 services:
   eureka-server:
     image: "eureka-server:latest"
+    mem_limit: 256m
   admin:
     image: "admin:latest"
+    mem_limit: 512m
     ports:
       - "8880:8880"
   gateway-server:
     image: "gateway-server:latest"
+    mem_limit: 512m
     ports:
-      - "8881:8881"
+      - "80:8881"
   sample-application:
     image: "sample-application:latest"
+    mem_limit: 256m
   second-sample-application:
     image: "second-sample-application:latest"
+    mem_limit: 256m
   portainer:
     image: "portainer/portainer:latest"
     ports:
