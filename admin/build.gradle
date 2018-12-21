@@ -13,10 +13,10 @@ buildDocker {
 
         env ("EUREKA_HOST",                 "http://eureka-server:8882/service-registry/eureka/")
         env ("SPRING_PROFILES_ACTIVE",      "prod")
-        env ("TZ",                          "US/Eastern")
 
         expose (8880)
 
+        run ("apk add curl bash --update")
         add (project.file('entrypoint.sh'))
         add (project.getName() + '-' + project.getVersion() + '-boot.jar', '/' + project.getName() + '.jar')
         entrypoint (["/entrypoint.sh"])
