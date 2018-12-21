@@ -1,10 +1,7 @@
 server:
-  port: 8881
+  port: 8880
   servlet:
-    context-path: /
-  compression:
-    enabled: true
-
+    context-path: /admin
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10
@@ -14,12 +11,11 @@ eureka:
       management.context-path: ${server.servlet.context-path}/actuator
       startup: ${random.int}    #needed to trigger info and endpoint update after restart
   client:
+    registry-fetch-interval-seconds: 10
     service-url:
       defaultZone: ${eureka.host}
     register-with-eureka: true
-    registry-fetch-interval-seconds: 10
   host: http://localhost:8882/service-registry/eureka/
-
 management:
   endpoints:
     web:
@@ -28,20 +24,6 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-  info:
-    git:
-      mode: full
-
 spring:
-  cloud:
-    gateway:
-      routes:
-      - id: first
-        uri: lb://first
-        predicates:
-        - Path=/first/**
-      - id: service-registry
-        uri: lb://eureka
-        predicates:
-        - Path=/service-registry/**
-
+  application:
+    name: admin

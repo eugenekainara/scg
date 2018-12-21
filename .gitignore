@@ -71,4 +71,7 @@ gradle-app.setting
 eureka-server/build/
 gateway-server/build/
 sample-application/build/
+admin/build/
+build/
+second-sample-application/build/
 scg.iml

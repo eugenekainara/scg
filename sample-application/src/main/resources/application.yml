@@ -1,16 +1,46 @@
-application:
-  name: sample
+spring:
+  application:
+    name: first
 
 server:
   servlet:
-    context-path: /sample
+    context-path: /first
   port: 8883
 
+test:
+  name: 123
+
 eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    status-page-url-path: ${server.servlet.context-path}/actuator/info
+    health-check-url-path: ${server.servlet.context-path}/actuator/health
+    metadata-map:
+      management.context-path: ${server.servlet.context-path}/actuator
+      startup: ${random.int}    #needed to trigger info and endpoint update after restart
   client:
     service-url:
       defaultZone: ${eureka.host}
     register-with-eureka: true
-  host: http://localhost:8882/config/eureka/
-  instance:
-    hostname: localhost
+    registry-fetch-interval-seconds: 10
+  host: http://localhost:8882/service-registry/eureka/
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+  info:
+    git:
+      mode: full

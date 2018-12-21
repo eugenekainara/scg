@@ -1,11 +1,32 @@
 server:
   port: 8882
   servlet:
-    context-path: /config
+    context-path: /service-registry
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+  info:
+    git:
+      mode: full
 
 eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    status-page-url-path: ${server.servlet.context-path}/actuator/info
+    health-check-url-path: ${server.servlet.context-path}/actuator/health
+    metadata-map:
+      management.context-path: ${server.servlet.context-path}/actuator
+      startup: ${random.int}    #needed to trigger info and endpoint update after restart
   client:
-    registerWithEureka: false
-    fetch-registry: false
+    registry-fetch-interval-seconds: 10
     service-url:
-      defaultZone: http://127.0.0.1:8882/config/eureka/
+      defaultZone: ${eureka.host}
+    register-with-eureka: true
+    fetch-registry: false
+  host: http://localhost:8882/service-registry/eureka/

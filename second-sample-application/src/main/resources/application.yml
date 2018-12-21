@@ -1,9 +1,10 @@
+application:
+  name: second
+
 server:
-  port: 8881
   servlet:
-    context-path: /
-  compression:
-    enabled: true
+    context-path: /second
+  port: 8884
 
 eureka:
   instance:
@@ -17,7 +18,6 @@ eureka:
     service-url:
       defaultZone: ${eureka.host}
     register-with-eureka: true
-    registry-fetch-interval-seconds: 10
   host: http://localhost:8882/service-registry/eureka/
 
 management:
@@ -31,17 +31,3 @@ management:
   info:
     git:
       mode: full
-
-spring:
-  cloud:
-    gateway:
-      routes:
-      - id: first
-        uri: lb://first
-        predicates:
-        - Path=/first/**
-      - id: service-registry
-        uri: lb://eureka
-        predicates:
-        - Path=/service-registry/**
-

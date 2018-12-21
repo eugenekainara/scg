@@ -1,0 +1,7 @@
+version: '2'
+
+services:
+  eureka-server:
+    image: "eureka-server:latest"
+    ports:
+      - "8882:8882"
