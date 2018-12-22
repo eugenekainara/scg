@@ -15,11 +15,10 @@ buildDocker {
 
         expose (8080)
 
-        run ("apk add curl bash openssh --update")
+        run ("apk add curl bash openssh-client --update")
         run ("mkdir -p ~/.ssh && chmod 600 ~/.ssh")
         run ("ssh-keyscan -t rsa bitbucket.org >> ~/.ssh/known_hosts")
-        add (project.file('id_rsa.pub'), '~/.ssh/')
-        add (project.file('id_rsa'), '~/.ssh/')
+        add (project.file('id_rsa'), '/root/.ssh/')
         add (project.file('entrypoint.sh'))
         add (project.getName() + '-' + project.getVersion() + '-boot.jar', '/' + project.getName() + '.jar')
         entrypoint (["/entrypoint.sh"])
