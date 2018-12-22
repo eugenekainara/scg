@@ -1,9 +1,6 @@
 spring:
   application:
     name: first
-  cloud:
-    config:
-      uri: http://config-server:8080/config-server
 server:
   servlet:
     context-path: /first
@@ -25,7 +22,7 @@ eureka:
       defaultZone: ${eureka.host}
     register-with-eureka: true
     registry-fetch-interval-seconds: 10
-  host: http://localhost:8882/service-registry/eureka/
+  host: http://eureka-server:8882/service-registry/eureka/
 
 feign:
   client:

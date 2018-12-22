@@ -10,7 +10,7 @@ services:
       - eureka-server
   eureka-server:
     image: "eureka-server:latest"
-    mem_limit: 256m
+    mem_limit: 512m
   admin:
     image: "admin:latest"
     mem_limit: 512m
@@ -23,10 +23,10 @@ services:
       - "80:8881"
   sample-application:
     image: "sample-application:latest"
-    mem_limit: 256m
+    mem_limit: 512m
   second-sample-application:
     image: "second-sample-application:latest"
-    mem_limit: 256m
+    mem_limit: 512m
   portainer:
     image: "portainer/portainer:latest"
     ports:
