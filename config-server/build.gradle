@@ -2,11 +2,7 @@ version = parent.version
 
 dependencies {
     compile ('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
-    compile ('org.springframework.boot:spring-boot-starter-web')
     compile ('org.springframework.boot:spring-boot-starter-actuator')
-    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
-    compile('org.springframework.cloud:spring-cloud-starter-openfeign')
-    compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
     compile('org.springframework.cloud:spring-cloud-config-server')
 }
 
@@ -17,13 +13,14 @@ buildDocker {
         env ("EUREKA_HOST",                 "http://eureka-server:8882/service-registry/eureka/")
         env ("SPRING_PROFILES_ACTIVE",      "prod")
 
-        expose (8883)
+        expose (8080)
 
-        run ("apk add curl bash --update")
+        run ("apk add curl bash openssh --update")
+        run ("ssh-keyscan -t rsa bitbucket.org >> /known_hosts")
         add (project.file('entrypoint.sh'))
         add (project.getName() + '-' + project.getVersion() + '-boot.jar', '/' + project.getName() + '.jar')
         entrypoint (["/entrypoint.sh"])
-        healthCheck (10, 5, 5, 360, 'curl 127.0.0.1:8883/first/actuator/health -f -s || exit 1')
+        healthCheck (10, 5, 5, 360, 'curl 127.0.0.1:8080/config-server/actuator/health -f -s || exit 1')
     }
 
 }

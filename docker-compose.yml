@@ -1,6 +1,11 @@
 version: '2'
 
 services:
+  config-server:
+    image: "config-server:latest"
+    mem_limit: 512m
+    ports:
+      - "8080:8080"
   eureka-server:
     image: "eureka-server:latest"
     mem_limit: 256m
