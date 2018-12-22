@@ -6,6 +6,8 @@ services:
     mem_limit: 512m
     ports:
       - "8080:8080"
+    depends_on:
+      - eureka-server
   eureka-server:
     image: "eureka-server:latest"
     mem_limit: 256m

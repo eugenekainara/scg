@@ -16,7 +16,8 @@ buildDocker {
         expose (8080)
 
         run ("apk add curl bash openssh --update")
-        run ("ssh-keyscan -t rsa bitbucket.org >> /known_hosts")
+        run ("mkdir -p ~/.ssh && chmod 600 ~/.ssh")
+        run ("ssh-keyscan -t rsa bitbucket.org >> ~/.ssh/known_hosts")
         add (project.file('entrypoint.sh'))
         add (project.getName() + '-' + project.getVersion() + '-boot.jar', '/' + project.getName() + '.jar')
         entrypoint (["/entrypoint.sh"])

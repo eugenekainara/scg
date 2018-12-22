@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          ignoreLocalSshSettings: true
+#          ignoreLocalSshSettings: true
           privateKey: |
             -----BEGIN OPENSSH PRIVATE KEY-----
             b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn
@@ -58,7 +58,7 @@ spring:
             -----END OPENSSH PRIVATE KEY-----
           clone-on-start: true
           uri: git@bitbucket.org:RostislavReznichenko/configuration-properties.git
-          known-hosts-file: /known.hosts
+#          known-hosts-file: /known.hosts
 
 server:
   servlet:
