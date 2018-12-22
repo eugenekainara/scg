@@ -5,60 +5,8 @@ spring:
     config:
       server:
         git:
-#          ignoreLocalSshSettings: true
-          privateKey: |
-            -----BEGIN OPENSSH PRIVATE KEY-----
-            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
-            -----END OPENSSH PRIVATE KEY-----
           clone-on-start: true
           uri: git@bitbucket.org:RostislavReznichenko/configuration-properties.git
-#          known-hosts-file: /known.hosts
 
 server:
   servlet:

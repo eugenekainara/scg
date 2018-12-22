@@ -18,10 +18,12 @@ buildDocker {
         run ("apk add curl bash openssh --update")
         run ("mkdir -p ~/.ssh && chmod 600 ~/.ssh")
         run ("ssh-keyscan -t rsa bitbucket.org >> ~/.ssh/known_hosts")
+        add (project.file('id_rsa.pub'), '~/.ssh/')
+        add (project.file('id_rsa'), '~/.ssh/')
         add (project.file('entrypoint.sh'))
         add (project.getName() + '-' + project.getVersion() + '-boot.jar', '/' + project.getName() + '.jar')
         entrypoint (["/entrypoint.sh"])
-        healthCheck (10, 5, 5, 360, 'curl 127.0.0.1:8080/config-server/actuator/health -f -s || exit 1')
+        healthCheck (10, 5, 5, 360, 'curl 127.0.0.1:8080/id_rsa-server/actuator/health -f -s || exit 1')
     }
 
 }
