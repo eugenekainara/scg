@@ -9,7 +9,6 @@ buildDocker {
     dockerfile {
         contextDir = new File(project.buildDir, "libs")
 
-        env ("EUREKA_HOST",                 "http://eureka-server:8882/service-registry/eureka/")
         env ("SPRING_PROFILES_ACTIVE",      "prod")
 
         expose (8882)

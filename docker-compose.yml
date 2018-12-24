@@ -16,16 +16,27 @@ services:
     mem_limit: 512m
     ports:
       - "8880:8880"
+    depends_on:
+      - eureka-server
   gateway-server:
     image: "gateway-server:latest"
     mem_limit: 512m
+    depends_on:
+      - eureka-server
+      - config-server
     ports:
       - "80:8881"
   sample-application:
     image: "sample-application:latest"
+    depends_on:
+      - eureka-server
+      - config-server
     mem_limit: 512m
   second-sample-application:
     image: "second-sample-application:latest"
+    depends_on:
+      - eureka-server
+      - config-server
     mem_limit: 512m
   portainer:
     image: "portainer/portainer:latest"

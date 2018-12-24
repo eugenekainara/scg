@@ -5,44 +5,44 @@ server:
   compression:
     enabled: true
   use-forward-headers: true
-
-eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 10
-    status-page-url-path: ${server.servlet.context-path}/actuator/info
-    health-check-url-path: ${server.servlet.context-path}/actuator/health
-    metadata-map:
-      management.context-path: ${server.servlet.context-path}/actuator
-      startup: ${random.int}    #needed to trigger info and endpoint update after restart
-  client:
-    service-url:
-      defaultZone: ${eureka.host}
-    register-with-eureka: true
-    registry-fetch-interval-seconds: 10
-  host: http://localhost:8882/service-registry/eureka/
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
-  info:
-    git:
-      mode: full
-
-spring:
-  cloud:
-    gateway:
-      routes:
-      - id: first
-        uri: lb://first
-        predicates:
-        - Path=/first/**
-      - id: service-registry
-        uri: lb://eureka
-        predicates:
-        - Path=/service-registry/**
-
+#
+#eureka:
+#  instance:
+#    leaseRenewalIntervalInSeconds: 10
+#    status-page-url-path: ${server.servlet.context-path}/actuator/info
+#    health-check-url-path: ${server.servlet.context-path}/actuator/health
+#    metadata-map:
+#      management.context-path: ${server.servlet.context-path}/actuator
+#      startup: ${random.int}    #needed to trigger info and endpoint update after restart
+#  client:
+#    service-url:
+#      defaultZone: ${eureka.host}
+#    register-with-eureka: true
+#    registry-fetch-interval-seconds: 10
+#  host: http://localhost:8882/service-registry/eureka/
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#  endpoint:
+#    health:
+#      show-details: ALWAYS
+#  info:
+#    git:
+#      mode: full
+#
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#      - id: first
+#        uri: lb://first
+#        predicates:
+#        - Path=/first/**
+#      - id: service-registry
+#        uri: lb://eureka
+#        predicates:
+#        - Path=/service-registry/**
+#

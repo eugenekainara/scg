@@ -5,13 +5,14 @@ dependencies {
     compile ('org.springframework.boot:spring-boot-starter-web')
     compile ('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    compile('org.springframework.cloud:spring-cloud-config-client')
+    compile('org.springframework.cloud:spring-cloud-config-client')
 }
 
 buildDocker {
     dockerfile {
         contextDir = new File(project.buildDir, "libs")
 
-        env ("EUREKA_HOST",                 "http://eureka-server:8882/service-registry/eureka/")
         env ("SPRING_PROFILES_ACTIVE",      "prod")
 
         expose (8884)
