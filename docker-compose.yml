@@ -1,44 +1,24 @@
 version: '2'
 
 services:
-  config-server:
-    image: "config-server:latest"
-    mem_limit: 512m
-    ports:
-      - "8080:8080"
-    depends_on:
-      - eureka-server
-  eureka-server:
-    image: "eureka-server:latest"
-    mem_limit: 512m
-  admin:
-    image: "admin:latest"
-    mem_limit: 512m
-    ports:
-      - "8880:8880"
-    depends_on:
-      - eureka-server
   gateway-server:
     image: "gateway-server:latest"
     mem_limit: 512m
-    depends_on:
-      - eureka-server
-      - config-server
     ports:
       - "80:8881"
+    networks:
+      - scg_test
   sample-application:
     image: "sample-application:latest"
-    depends_on:
-      - eureka-server
-      - config-server
     mem_limit: 512m
+    networks:
+      - scg_test
   second-sample-application:
     image: "second-sample-application:latest"
-    depends_on:
-      - eureka-server
-      - config-server
     mem_limit: 512m
-  portainer:
-    image: "portainer/portainer:latest"
-    ports:
-      - "9000:9000"
+    networks:
+      - scg_test
+
+networks:
+  scg_test:
+    external: true

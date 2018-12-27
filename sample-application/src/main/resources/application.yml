@@ -5,7 +5,9 @@ server:
   servlet:
     context-path: /first
   port: 8883
-
+logging:
+  level:
+    org.springframework.cloud.config.client: debug
 #test:
 #  name: 123
 #
