@@ -27,7 +27,7 @@ eureka:
       defaultZone: ${eureka.host}
     register-with-eureka: true
     registry-fetch-interval-seconds: 10
-  host: http://localhost:8882/service-registry/eureka/
+  host: http://eureka-server:8882/service-registry/eureka/
 
 management:
   endpoints:

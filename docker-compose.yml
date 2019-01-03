@@ -11,11 +11,15 @@ services:
   sample-application:
     image: "sample-application:latest"
     mem_limit: 512m
+    ports:
+      - "8883:8883"
     networks:
       - scg_test
   second-sample-application:
     image: "second-sample-application:latest"
     mem_limit: 512m
+    ports:
+      - "8884:8884"
     networks:
       - scg_test
 

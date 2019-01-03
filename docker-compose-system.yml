@@ -13,6 +13,8 @@ services:
   eureka-server:
     image: "eureka-server:latest"
     mem_limit: 512m
+    ports:
+      - "8882:8882"
     networks:
       - test
   admin:

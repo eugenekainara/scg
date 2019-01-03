@@ -29,4 +29,4 @@ eureka:
       defaultZone: ${eureka.host}
     register-with-eureka: true
     fetch-registry: false
-  host: http://localhost:8882/service-registry/eureka/
+  host: http://eureka-server:8882/service-registry/eureka/
