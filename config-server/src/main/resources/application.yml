@@ -2,6 +2,9 @@ spring:
   application:
     name: config-server
   cloud:
+    inetutils:
+      preferred-networks: 192,10.0
+      timeout-seconds: 5
     config:
       server:
         git:

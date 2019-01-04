@@ -1,42 +1,40 @@
 version: '3.4'
 services:
-  rabbit:
-    image: rabbitmq:3-management
-    hostname: rabbit
-    environment:
-      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-      RABBITMQ_DEFAULT_USER: "rabbitmq"
-      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-      RABBITMQ_DEFAULT_VHOST: "/"
-      TZ: "$TIMEZONE"
-      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit log_levels [{connection,error}]"
-    ports:
-      - 15672:15672
-      - 5672:5672
-    networks:
-      - scg
-    healthcheck:
-      test: bash -c "</dev/tcp/127.0.0.1/5672"
-      interval: 15s
-      timeout: 1s
-      retries: 10
-    deploy:
-     update_config:
-        parallelism: 1
-        delay: 10s
-     resources:
-        limits:
-          memory: 512M
-        reservations:
-          memory: 256M
-     replicas: 1
+#  rabbit:
+#    image: rabbitmq:3-management
+#    hostname: rabbit
+#    environment:
+#      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+#      RABBITMQ_DEFAULT_USER: "rabbitmq"
+#      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+#      RABBITMQ_DEFAULT_VHOST: "/"
+#      TZ: "$TIMEZONE"
+#      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit log_levels [{connection,error}]"
+#    ports:
+#      - 15672:15672
+#      - 5672:5672
+#    healthcheck:
+#      test: bash -c "</dev/tcp/127.0.0.1/5672"
+#      interval: 15s
+#      timeout: 1s
+#      retries: 10
+#    deploy:
+#     update_config:
+#        parallelism: 1
+#        delay: 10s
+#     resources:
+#        limits:
+#          memory: 512M
+#        reservations:
+#          memory: 256M
+#     replicas: 1
 
   admin:
     image: admin:latest
     environment:
       - TZ=$TIMEZONE
-    networks:
-      - scg
+    ports:
+      - 8880:8880
     depends_on:
       - eureka-server
       - config-server
@@ -49,7 +47,7 @@ services:
         limits:
           memory: 512M
         reservations:
-          memory: 256M
+          memory: 128M
      replicas: 1
 
   sample-application:
@@ -57,8 +55,6 @@ services:
     environment:
       - LOGSTASH_HOST=$LOGSTASHHOST
       - TZ=$TIMEZONE
-    networks:
-      - scg
     ports:
       - 8883:8883
     depends_on:
@@ -73,17 +69,13 @@ services:
         delay: 10s
      resources:
         limits:
-          memory: 512M
-        reservations:
-          memory: 512M
+          memory: 256M
      replicas: 1
-     
+
   second-sample-application:
     image: second-sample-application:latest
     environment:
       - TZ=$TIMEZONE
-    networks:
-      - scg
     ports:
       - 8884:8884
     depends_on:
@@ -98,17 +90,13 @@ services:
         delay: 10s
       resources:
         limits:
-          memory: 512M
-        reservations:
-          memory: 512M
+          memory: 256M
       replicas: 1
 
   eureka-server:
     image: eureka-server:latest
     environment:
       - TZ=$TIMEZONE
-    networks:
-      - scg
     ports:
       - 8882:8882
     depends_on:
@@ -119,18 +107,16 @@ services:
         delay: 10s
      resources:
         limits:
-          memory: 512M
-        reservations:
           memory: 256M
+        reservations:
+          memory: 128M
      replicas: 1
 
   config-server:
-    image: "config-server:latest"
+    image: config-server:latest
     environment:
       - LOGSTASH_HOST=$LOGSTASHHOST
       - TZ=$TIMEZONE
-    networks:
-      - scg
     ports:
       - 8080:8080
     depends_on:
@@ -144,7 +130,7 @@ services:
         limits:
           memory: 512M
         reservations:
-          memory: 256M
+          memory: 128M
       replicas: 1
 
   gateway-server:
@@ -152,8 +138,6 @@ services:
     environment:
       - LOGSTASH_HOST=$LOGSTASHHOST
       - TZ=$TIMEZONE
-    networks:
-      - scg
     depends_on:
       - eureka-server
       - config-server
@@ -166,15 +150,13 @@ services:
         delay: 10s
      resources:
         limits:
-          memory: 512M
+          memory: 256M
         reservations:
-          memory: 512M
+          memory: 128M
      replicas: 1
 
   portainer:
     image: portainer/portainer:latest
-    networks:
-      - scg
     ports:
       - 9000:9000
     volumes:
@@ -187,7 +169,7 @@ services:
         limits:
           memory: 512M
         reservations:
-          memory: 512M
+          memory: 128M
      replicas: 1
 
   elasticsearch:
@@ -195,6 +177,7 @@ services:
     ports:
       - 9200:9200
     environment:
+      - ES_JAVA_OPTS=-Xmx256m -Xms256m
       - network.host=0.0.0.0
       - transport.host=0.0.0.0
       - discovery.type=single-node
@@ -207,17 +190,15 @@ services:
         limits:
           memory: 512M
         reservations:
-          memory: 512M
+          memory: 256M
       replicas: 1
 
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:6.4.2
     environment:
       - TZ=$TIMEZONE
-      - ES_HOST=elasticsearch
+      - ES_HOST=$ELASTICSEARCH_HOST
       - http.host=0.0.0.0
-    networks:
-      - scg
     ports:
       - 6661:6661/udp
       - 514:1514/udp
@@ -246,7 +227,7 @@ services:
         limits:
           memory: 512M
         reservations:
-          memory: 512M
+          memory: 128M
       replicas: 1
 
   kibana:
@@ -261,12 +242,9 @@ services:
           limits:
             memory: 512M
           reservations:
-            memory: 512M
+            memory: 128M
         replicas: 1
 
 secrets:
   logstash_config:
     file: ./logstash.conf
-
-networks:
-  scg:

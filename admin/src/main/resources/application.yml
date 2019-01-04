@@ -27,3 +27,7 @@ management:
 spring:
   application:
     name: admin
+  cloud:
+    inetutils:
+      preferred-networks: 192,10.0
+      timeout-seconds: 5

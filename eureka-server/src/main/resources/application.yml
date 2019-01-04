@@ -2,7 +2,11 @@ server:
   port: 8882
   servlet:
     context-path: /service-registry
-
+spring:
+  cloud:
+    inetutils:
+      preferred-networks: 192,10.0
+      timeout-seconds: 5
 management:
   endpoints:
     web:

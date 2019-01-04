@@ -1,6 +1,10 @@
 spring:
   application:
     name: first
+  cloud:
+    inetutils:
+      preferred-networks: 192,10.0
+      timeout-seconds: 5
 server:
   servlet:
     context-path: /first
