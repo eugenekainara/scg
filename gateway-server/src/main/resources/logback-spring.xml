@@ -37,6 +37,14 @@
             <customFields>{"appName": "gateway", "tags": ["gateway", "java_apps"]}</customFields>
         </appender>
 
+        <appender name="async" class="ch.qos.logback.classic.AsyncAppender">
+            <appender-ref ref="logstash" />
+        </appender>
+
+        <logger name="reactor.netty.http.server.AccessLog" level="INFO" additivity="false">
+            <appender-ref ref="async"/>
+        </logger>
+
         <root level="INFO">
             <appender-ref ref="logstash"/>
         </root>

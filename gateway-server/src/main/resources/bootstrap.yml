@@ -3,4 +3,5 @@ spring:
     name: gateway
   cloud:
     config:
+      fail-fast: true
       uri: http://config-server:8080/config-server

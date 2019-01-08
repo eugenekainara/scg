@@ -3,4 +3,5 @@ spring:
     name: second
   cloud:
     config:
+      fail-fast: true
       uri: http://config-server:8080/config-server

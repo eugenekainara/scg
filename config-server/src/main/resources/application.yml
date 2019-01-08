@@ -1,6 +1,10 @@
 spring:
   application:
     name: config-server
+  rabbitmq:
+    host: rabbit
+    username: rabbitmq
+    password: rabbitmq
   cloud:
     inetutils:
       preferred-networks: 192,10.0
@@ -11,6 +15,11 @@ spring:
           clone-on-start: true
           uri: git@bitbucket.org:RostislavReznichenko/configuration-properties.git
           delete-untracked-branches: true
+          force-pull: true
+          refresh-rate: 30
+        monitor:
+          bitbucket:
+            enabled: true
 
 server:
   servlet:
