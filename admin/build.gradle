@@ -5,6 +5,7 @@ dependencies {
     compile ('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     compile ('org.springframework.boot:spring-boot-starter-web')
     compile ('org.springframework.boot:spring-boot-starter-actuator')
+    compile ('org.springframework.boot:spring-boot-starter-mail')
 }
 
 buildDocker {
@@ -12,6 +13,7 @@ buildDocker {
         contextDir = new File(project.buildDir, "libs")
 
         env ("SPRING_PROFILES_ACTIVE",      "prod")
+        env ("LINKED_SERVICES",             "logstash:1514")
 
         expose (8880)
 

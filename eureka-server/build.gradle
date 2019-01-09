@@ -10,6 +10,7 @@ buildDocker {
         contextDir = new File(project.buildDir, "libs")
 
         env ("SPRING_PROFILES_ACTIVE",      "prod")
+        env ("LINKED_SERVICES",             "logstash:1514")
 
         expose (8882)
 

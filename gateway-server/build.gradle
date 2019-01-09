@@ -6,6 +6,8 @@ dependencies {
     compile ('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.cloud:spring-cloud-starter-gateway')
     compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+//    compile('org.springframework.cloud:spring-cloud-starter-sleuth:2.1.0.BUILD-SNAPSHOT')
+//    compile('org.springframework.cloud:spring-cloud-sleuth-core:2.1.0.BUILD-SNAPSHOT')
     compile('org.springframework.cloud:spring-cloud-config-client')
     compile('org.springframework.cloud:spring-cloud-starter-bus-amqp')
 }
@@ -16,7 +18,7 @@ buildDocker {
 
         env ("EUREKA_HOST",                 "http://eureka-server:8882/service-registry/eureka/")
         env ("SPRING_PROFILES_ACTIVE",      "prod")
-
+        env ("LINKED_SERVICES",             "logstash:1514,config-server:8080")
         expose (8881)
 
         run ("apk add curl bash --update")

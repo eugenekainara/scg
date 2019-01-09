@@ -39,19 +39,17 @@ spring:
     username: rabbitmq
     password: rabbitmq
   cloud:
-#    gateway:
-#      routes:
-#      - id: first
-#        uri: lb://first
-#        predicates:
-#        - Path=/first/**
-#      - id: service-registry
-#        uri: lb://eureka
-#        predicates:
-#        - Path=/service-registry/**
+    gateway:
+      routes:
+      - id: first
+        uri: lb://first
+        predicates:
+        - Path=/first/**
+      - id: service-registry
+        uri: lb://eureka
+        predicates:
+        - Path=/service-registry/**
     inetutils:
       preferred-networks: 192,10.0
       timeout-seconds: 5
-#    config:
-#      label:
 
