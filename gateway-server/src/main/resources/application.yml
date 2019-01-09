@@ -20,3 +20,6 @@ spring:
         uri: lb://sample
         predicates:
         - Path=/sample/**
+debug: true
+logging:
+  level.org.springframework.cloud: debug
