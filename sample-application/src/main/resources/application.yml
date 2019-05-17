@@ -1,10 +1,6 @@
 spring:
   application:
     name: first
-  rabbitmq:
-    host: rabbit
-    username: rabbitmq
-    password: rabbitmq
   cloud:
     inetutils:
       preferred-networks: 192,10.0
@@ -22,9 +18,6 @@ server:
   servlet:
     context-path: /first
   port: 8883
-logging:
-  level:
-    org.springframework.cloud.config.client: debug
 test:
   name: 123
 

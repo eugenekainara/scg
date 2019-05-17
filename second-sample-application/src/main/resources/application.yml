@@ -1,15 +1,8 @@
 spring:
-  application:
-    name: second
-  rabbitmq:
-    host: rabbit
-    username: rabbitmq
-    password: rabbitmq
   cloud:
     inetutils:
       preferred-networks: 192,10.0
       timeout-seconds: 5
-
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10

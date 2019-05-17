@@ -1,8 +1,8 @@
 rootProject.name = 'scg'
 include 'eureka-server'
-include 'gateway-server'
+//include 'gateway-server'
 include 'sample-application'
 include 'second-sample-application'
-include 'admin'
-include 'config-server'
+//include 'admin'
+//include 'config-server'
 

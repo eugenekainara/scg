@@ -7,8 +7,6 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-sleuth')
     compile('org.springframework.cloud:spring-cloud-starter-openfeign')
     compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
-    compile('org.springframework.cloud:spring-cloud-config-client')
-    compile('org.springframework.cloud:spring-cloud-starter-bus-amqp')
 }
 
 buildDocker {
@@ -16,7 +14,7 @@ buildDocker {
         contextDir = new File(project.buildDir, "libs")
 
         env ("SPRING_PROFILES_ACTIVE",      "prod")
-        env ("LINKED_SERVICES",             "logstash:1514,config-server:8080")
+        env ("LINKED_SERVICES",             "docker.for.mac.localhost:24224")
 
         expose (8883)
 
