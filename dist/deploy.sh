@@ -1,7 +1,7 @@
 #!/bin/sh
 BASEDIR=$(pwd)
 docker stack rm poc
-#sleep 10
+sleep 10
 set -a
 if [ -e $BASEDIR/app.properties ]; then
 source $BASEDIR/app.properties

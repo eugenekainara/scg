@@ -48,8 +48,8 @@
         <!-- [Optional] Configurations to customize Fluency's behavior: https://github.com/komamitsu/fluency#usage  -->
         <ackResponseMode>false</ackResponseMode>
         <fileBackupDir>/tmp</fileBackupDir>
-        <bufferChunkInitialSize>524288</bufferChunkInitialSize>
-        <bufferChunkRetentionSize>256288</bufferChunkRetentionSize>
+        <bufferChunkRetentionSize>524288</bufferChunkRetentionSize>
+        <bufferChunkInitialSize>256288</bufferChunkInitialSize>
         <maxBufferSize>1048576</maxBufferSize>
         <waitUntilBufferFlushed>30</waitUntilBufferFlushed>
         <waitUntilFlusherTerminated>40</waitUntilFlusherTerminated>
@@ -62,7 +62,8 @@
         <flattenMapMarker>false</flattenMapMarker>
 
         <encoder>
-            <pattern><![CDATA[%date{HH:mm:ss.SSS} [%thread] %-5level %logger{15}#%line %msg]]></pattern>
+            <charset>UTF-8</charset>
+            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
         </encoder>
     </appender>
 
