@@ -54,11 +54,11 @@ subprojects {
         testCompile "junit:junit:4.11"
         compile group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
         compile "org.springframework.boot:spring-boot-autoconfigure"
-        compile("net.logstash.logback:logstash-logback-encoder:5.2")
-        compile 'ch.qos.logback:logback-classic:1.2.3'
-        compile 'com.sndyuk:logback-more-appenders:1.5.5'
-        compile 'org.komamitsu:fluency-core:2.3.0'
-        compile 'org.komamitsu:fluency-fluentd:2.3.0'
+        compile("net.logstash.logback:logstash-logback-encoder:6.1")
+//        compile 'ch.qos.logback:logback-classic:1.2.3'
+//        compile 'com.sndyuk:logback-more-appenders:1.5.5'
+//        compile 'org.komamitsu:fluency-core:2.3.0'
+//        compile 'org.komamitsu:fluency-fluentd:2.3.0'
     }
 
     docker {

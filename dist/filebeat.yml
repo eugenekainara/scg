@@ -1,0 +1,55 @@
+#filebeat.inputs:
+#  - type: docker
+#    containers.ids:
+#      - "*"
+#    json.keys_under_root: true
+#    json.add_error_key: true
+#    json.message_key: message
+#    json.ignore_decoding_error: true
+#    exclude_lines: ["^\\s+[\\-`('.|_]"]  # drop asciiart lines
+#    multiline.pattern: '^{'
+#    multiline.negate: true
+#    multiline.match:  after
+#    processors:
+#      - add_docker_metadata: ~
+#      - add_cloud_metadata: ~
+#      - decode_json_fields:
+#          fields: ['message']
+#          target: json
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+      labels.dedot: true
+      templates:
+        - condсition:
+            contains:
+              docker.container.image: application
+          config:
+            - type: docker
+              containers.ids:
+                - "${data.docker.container.id}"
+              exclude_lines: ["^\\s+[\\-`('.|_]"]  # drop asciiart lines
+json.keys_under_root: true
+json.add_error_key: true
+json.message_key: message
+json.ignore_decoding_error: true
+#
+#processors:
+#  - decode_json_fields:
+#      fields: ["message"]
+#      process_array: false
+#      max_depth: 1
+#      target: ""
+#      overwrite_keys: false
+
+fields:
+  env: local
+
+cloud:
+  id: <id>
+  auth: <auth>
+
+logging:
+  to_files: true
+  to_syslog: false

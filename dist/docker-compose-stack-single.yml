@@ -1,55 +1,19 @@
 version: '3.4'
 services:
-  fluent:
-    image: fluent/fluent-bit
-    ports:
-      - 24224:24224
-    configs:
-      - source: fluent_config
-        target: /fluent-bit/etc/fluent-bit.conf
-      - source: parsers_conf
-        target: /fluent-bit/etc/parsers.conf
-    deploy:
-      mode: global
-      resources:
-        limits:
-          memory: 512M
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.7.2
-    ports:
-      - 9200:9200
-    environment:
-      - ES_JAVA_OPTS=-Xmx412m -Xms256m
-      - network.host=0.0.0.0
-      - transport.host=0.0.0.0
-      - discovery.type=single-node
-      - bootstrap.memory_lock=true
-    deploy:
-      update_config:
-        parallelism: 1
-        delay: 10s
-      resources:
-        limits:
-          memory: 512M
-        reservations:
-          memory: 256M
-      replicas: 1
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana-oss:6.7.2
-    ports:
-      - 5601:5601
-    deploy:
-      update_config:
-        parallelism: 1
-        delay: 10s
-      resources:
-        limits:
-          memory: 512M
-        reservations:
-          memory: 256M
-      replicas: 1
+#  fluent:
+#    image: fluent/fluent-bit
+#    ports:
+#      - 24224:24224
+#    configs:
+#      - source: fluent_config
+#        target: /fluent-bit/etc/fluent-bit.conf
+#      - source: parsers_conf
+#        target: /fluent-bit/etc/parsers.conf
+#    deploy:
+#      mode: global
+#      resources:
+#        limits:
+#          memory: 512M
 
   sample-application:
     image: sample-application:latest
@@ -105,6 +69,56 @@ services:
           memory: 128M
       replicas: 1
 
+  filebeat:
+    image: docker.elastic.co/beats/filebeat-oss:7.1.1
+    user: root
+    configs:
+      - source: filebeat_config
+        target: /usr/share/filebeat/filebeat.yml
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - filebeat_data:/usr/share/filebeat/data:rw
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+
+#  logstash:
+#    image: docker.elastic.co/logstash/logstash-oss:7.1.1
+#    environment:
+#      - TZ=$TIMEZONE
+#      - ES_HOST=$ELASTICSEARCH_HOST
+#      - http.host=0.0.0.0
+#    ports:
+#      - 6661:6661/udp
+#      - 514:1514/udp
+#      - 515:1515/udp
+#    healthcheck:
+#      test: curl localhost:9600 -f -s || exit 1
+#      interval: 10s
+#      timeout: 1s
+#      retries: 10
+#      start_period: 2m
+#    configs:
+#      - source: logstash_config
+#        target: /usr/share/logstash/pipeline/logstash.conf
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "1M"
+#        max-file: "2"
+#    deploy:
+#      update_config:
+#        parallelism: 1
+#        delay: 10s
+#      resources:
+#        limits:
+#          memory: 512M
+#        reservations:
+#          memory: 512M
+#      replicas: 1
+
   portainer:
     image: portainer/portainer
     command: -H tcp://tasks.agent:9001 --tlsskipverify --no-analytics --admin-password "$$2y$$05$$MjEcJLITbMMjDk6ZSNIV3O0MVyrVyPRqACGPlxD7p83k5TY5OFON6"
@@ -137,11 +151,16 @@ services:
           memory: 128M
 
 configs:
-  fluent_config:
-    file: fluent.conf
-  parsers_conf:
-    file: parsers.conf
+#  fluent_config:
+#    file: fluent.conf
+#  parsers_conf:
+#    file: parsers.conf
+#  logstash_config:
+#    file: logstash.conf
+  filebeat_config:
+    file: filebeat.yml
 
 volumes:
   portainer:
   agent:
+  filebeat_data:

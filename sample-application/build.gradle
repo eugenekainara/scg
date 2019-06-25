@@ -14,7 +14,7 @@ buildDocker {
         contextDir = new File(project.buildDir, "libs")
 
         env ("SPRING_PROFILES_ACTIVE",      "prod")
-        env ("LINKED_SERVICES",             "docker.for.mac.localhost:24224")
+//        env ("LINKED_SERVICES",             "logstash:1514")
 
         expose (8883)
 
